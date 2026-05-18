@@ -1,11 +1,32 @@
+import { useState, type ReactEventHandler } from "react";
 import "./BookForm.css";
 
 export default function BookForm() {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  
+  const hanldeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (title && author) {
+      //disptach action
+      setTitle("");
+      setAuthor("");
+    }
+  
+  }
   return (
     <div className="app-block book-form">
       <h2>Add a New Book</h2>
-      <form>
-        
+      <form onSubmit={hanldeSubmit}>
+        <div>
+          <label htmlFor="title">Title</label>
+          <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="author">Author</label>
+          <input type="text" id="author" value={author} onChange={(e) => setAuthor(e.target.value)} />
+        </div>
+        <button type="submit">Add Book</button>
       </form>
     </div>
   )
