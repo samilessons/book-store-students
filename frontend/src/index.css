@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  font-family: "Arial";
+  -webkit-font-smoothing: antialiased;
+  -mox-osx-font-smoothing: grayscale;
+  background: #0e2441;
+}
+
+code {
+  font-family: pre;
+}
