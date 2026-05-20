@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import type { BookState } from "../../redux/store";
 import type { NewBook } from "../../redux/books/actionCreators";
 
+import "./BookList.css";
+
 export default function BookList() {
-  const books = useSelector((state: RootState) => state.books);
+  const books = useSelector((state: BookState) => state.books);
 
   return (
     <div className="app-block book-list">
@@ -14,7 +16,7 @@ export default function BookList() {
         <ul>
           {books.map((book: NewBook, index: number) => (
             <li key={index}>
-              <strong>{book.title}</strong> by {book.author}
+              <div className="book-info"> {book.title} by <strong>{book.author}</strong> </div>
             </li>
           ))}
         </ul>
