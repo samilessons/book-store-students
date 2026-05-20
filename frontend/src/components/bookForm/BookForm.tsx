@@ -1,23 +1,27 @@
-import { useState, type ReactEventHandler } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
+import { addBook } from "../../redux/books/actionCreators";
 import "./BookForm.css";
 
 export default function BookForm() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  
-  const hanldeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (title && author) {
-      //disptach action
+      dispatch(addBook({ title, author }));
       setTitle("");
       setAuthor("");
     }
-  
-  }
+  };
+
   return (
     <div className="app-block book-form">
       <h2>Add a New Book</h2>
-      <form onSubmit={hanldeSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Title</label>
           <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -29,5 +33,5 @@ export default function BookForm() {
         <button type="submit">Add Book</button>
       </form>
     </div>
-  )
+  );
 }
