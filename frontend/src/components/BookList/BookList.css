@@ -34,6 +34,7 @@
 
 .book-list button:hover {
   background: #f00;
+  color: #fff;
 }
 
 .book-list .highlight {

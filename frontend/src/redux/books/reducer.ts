@@ -1,17 +1,16 @@
 import * as actionType from "./actionType";
-import type { NewBook } from "./actionCreators";
+import { type NewBook } from "../../interfaces/NewBookInterface";
 
-interface BookAction {
-  id: string;
-  type: string;
-  payload?: NewBook;
-}
+type BookAction =
+  | { type: typeof actionType.ADD_BOOK; payload: NewBook }
+  | { type: typeof actionType.DELETE_BOOK; payload: string };
 
-const initialState: NewBook[] = [{
-  "id": "1",
-  "title": "Atomic Habits",
-  "author": "James Clear"
-},
+const initialState: NewBook[] = [
+  {
+    "id": "1",
+    "title": "Atomic Habits",
+    "author": "James Clear"
+  },
   {
     "id": "2",
     "title": "Deep Work",
@@ -61,7 +60,9 @@ const initialState: NewBook[] = [{
 const booksReducer = (state = initialState, action: BookAction) => {
   switch (action.type) {
     case actionType.ADD_BOOK:
-      return action.payload ? [...state, action.payload] : state;
+      return [...state, action.payload];
+    case actionType.DELETE_BOOK:
+      return state.filter(book => book.id !== action.payload);
     default:
       return state;
   }
