@@ -10,9 +10,15 @@ export const addBook = (newBook: NewBook) => {
 };
 
 export const deleteBook = (id: string) => {
-  console.log(`${id} from deletebook`);
   return {
     type: actionType.DELETE_BOOK,
     payload: id
   };
 };
+
+export const toggleFavorite = (id: string) => {
+  return {
+    type: actionType.TOGGLE_FAVORITE,
+    payload: id
+  }
+}

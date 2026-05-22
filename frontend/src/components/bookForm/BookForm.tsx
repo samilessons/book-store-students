@@ -15,7 +15,7 @@ export default function BookForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (title && author) {
-      dispatch(addBook({ id: uuidv4(), title, author }));
+      dispatch(addBook({ id: uuidv4(), title, author, isFavorite: false }));
       setTitle("");
       setAuthor("");
     }
@@ -27,7 +27,7 @@ export default function BookForm() {
       const id = uuidv4();
       const title = data[rndid].title
       const author = data[rndid].author;
-      dispatch(addBook({ id, title, author }));
+      dispatch(addBook({ id, title, author, isFavorite: false }));
     }
   };
 
