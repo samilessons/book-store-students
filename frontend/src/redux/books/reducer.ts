@@ -17,7 +17,7 @@ const initialState: NewBook[] = [
     "id": "2",
     "title": "Deep Work",
     "author": "Cal Newport",
-    "isFavorite": true
+    "isFavorite": false
   },
   {
     "id": "3",
