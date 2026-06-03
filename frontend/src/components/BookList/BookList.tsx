@@ -53,10 +53,15 @@ export default function BookList() {
         <p>No books yet.</p>
       ) : (
         <ul>
-            {filteredBooks.map(({ author, title, id, isFavorite }: NewBook) => {
+            {filteredBooks.map(({ author, title, id, isFavorite, source }: NewBook) => {
               return (
                 <li key={id}>
-                  <div className="book-info"><span>{++i}</span> {highLightMatch(title, titleFilter)} by <strong>{highLightMatch(author, authorFilter)}</strong> </div>
+                  <div className="book-info">
+                    <span>{++i}</span>
+                    {highLightMatch(title, titleFilter)} by <strong>{highLightMatch(author, authorFilter)}
+                    </strong>
+                    <p className="source">{source}</p>
+                  </div>
                   <div className="book-actions">
                     <button className="favorite" onClick={() => handleToggleFavorite(id)}>
                       {isFavorite ? <MdFavorite color="magenta"/>:

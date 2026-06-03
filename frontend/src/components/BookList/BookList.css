@@ -59,6 +59,12 @@
   }
 }
 
+.source {
+  margin: 8px 0px 0px 0px;
+  font-size: 12px;
+  color: #777;
+}
+
 .book-list .highlight {
   background: #ff0;
 }
