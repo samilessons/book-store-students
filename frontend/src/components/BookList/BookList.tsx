@@ -57,7 +57,7 @@ export default function BookList() {
               return (
                 <li key={id}>
                   <div className="book-info">
-                    <span>{++i}</span>
+                    <span className="i">{++i}</span>
                     {highLightMatch(title, titleFilter)} by <strong>{highLightMatch(author, authorFilter)}
                     </strong>
                     <p className="source">{source}</p>

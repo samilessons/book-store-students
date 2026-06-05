@@ -20,11 +20,16 @@
       background: #dbe4f8;
     }
 
-        .book-info {
-          flex: 1;
-          text-align: left;
-          font-size: 18px;
-        }
+    .book-info {
+      flex: 1;
+      text-align: left;
+      font-size: 18px;
+
+      .i {
+        display: inline-block;
+        margin-right: 8px;
+      }
+    }
   }
 
   .book-actions {
