@@ -5,6 +5,8 @@ import CreateBook from "../../utils/createBook";
 import { addBook, fetchBook } from "../../redux/slices/booksSlice";
 import data from "../../../../data/data.json";
 
+import { setError } from "../../redux/slices/errorSlice";
+
 import "./BookForm.css";
 
 export default function BookForm() {
@@ -18,6 +20,8 @@ export default function BookForm() {
       dispatch(addBook(CreateBook({ title, author }, "MANUAL")));
       setTitle("");
       setAuthor("");
+    } else {
+      dispatch(setError("You must fill book's title and author"))
     }
   };
 
