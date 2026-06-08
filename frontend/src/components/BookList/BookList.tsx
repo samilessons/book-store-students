@@ -17,7 +17,6 @@ export default function BookList() {
 
   const hanldeDeleteBook = (id: string) => dispatch(deleteBook(id));
   const handleToggleFavorite = (id: string) => dispatch(toggleFavorite(id));
-
   const filteredBooks = books.filter((book: NewBook) => {
     const matchesTitle = book.title
       .toLowerCase()

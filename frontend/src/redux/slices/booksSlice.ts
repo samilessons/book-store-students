@@ -1,81 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import CreateBook from "../../utils/createBook";
-import { type NewBook } from "../../interfaces/NewBookInterface";
 import { setError } from "./errorSlice";
 
-const initialState: NewBook[] = [
-  // {
-  //   "id": "1",
-  //   "title": "Atomic Habits",
-  //   "author": "James Clear",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "2",
-  //   "title": "Deep Work",
-  //   "author": "Cal Newport",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "3",
-  //   "title": "The Psychology of Money",
-  //   "author": "Morgan Housel",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "4",
-  //   "title": "Think and Grow Rich",
-  //   "author": "Napoleon Hill",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "5",
-  //   "title": "The 7 Habits of Highly Effective People",
-  //   "author": "Stephen R. Covey",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "6",
-  //   "title": "Rich Dad Poor Dad",
-  //   "author": "Robert T. Kiyosaki",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "7",
-  //   "title": "The Lean Startup",
-  //   "author": "Eric Ries",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "8",
-  //   "title": "Start With Why",
-  //   "author": "Simon Sinek",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "9",
-  //   "title": "The Alchemist",
-  //   "author": "Paulo Coelho",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // },
-  // {
-  //   "id": "10",
-  //   "title": "0Man's Search for Meaning",
-  //   "author": "Viktor E. Frankl",
-  //   "isFavorite": false,
-  //   "source": "default"
-  // }
-];
+
+const initialState = {
+  books: [],
+  isLoadingViaAPI: false
+};
 
 export const fetchBook = createAsyncThunk(
   "books/fetchBook",
@@ -96,13 +28,13 @@ const booksSlice = createSlice({
   reducers: {
     addBook: (state, action) => {
       // return [...state, action.payload]; // immutable
-      state.push(action.payload); // mutable
+      state.books.push(action.payload); // mutable
     },
     deleteBook: (state, action) => {
       // return state.filter(book => book.id !== action.payload); // immutable
-      const index = state.findIndex((book) => book.id === action.payload); // mutbale
+      const index = state.books.findIndex((book) => book.id === action.payload); // mutbale
       if (index !== -1) {
-        state.splice(index, 1);
+        state.books.splice(index, 1);
       }
     },
     toggleFavorite: (state, action) => {
@@ -115,7 +47,7 @@ const booksSlice = createSlice({
       // })
 
       // mutabble
-      state.forEach((book) => {
+      state.books.forEach((book) => {
         if (book.id === action.payload) {
           book.isFavorite = !book.isFavorite;
         }
@@ -123,12 +55,17 @@ const booksSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchBook.pending, (state, action) => {
+      state.isLoadingViaAPI = true;
+    });
     builder.addCase(fetchBook.fulfilled, (state, action) => {
+      state.isLoadingViaAPI = false;
       if (action.payload.title && action.payload.author) {
-        state.push(CreateBook(action.payload, "VIA API"));
+        state.books.push(CreateBook(action.payload, "VIA API"));
       }
     });
-    builder.addCase(fetchBook.rejected, (_, action) => {
+    builder.addCase(fetchBook.rejected, (state, action) => {
+      state.isLoadingViaAPI = false;
       console.log(action.error.message);
     });
   }
@@ -136,6 +73,7 @@ const booksSlice = createSlice({
 
 export const { addBook, deleteBook, toggleFavorite } = booksSlice.actions;
 
-export const selectBooks = (state) => state.books;
+export const selectBooks = (state) => state.books.books;
+export const selectIsLoadingViaApi = (state) => state.books.isLoadingViaAPI;
 
 export default booksSlice.reducer;
