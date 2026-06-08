@@ -31,11 +31,20 @@
   background: #0056b3;
 }
 
-.boof-form .spinner {
-  animation: spinner 1s infinite linear;
-  margin-bottom: 10px;
+.book-form button:disabled {
+  background: #888888;
+  cursor:not-allowed;
 }
 
+.spinner {
+  animation: spinner 1s infinite linear;
+}
+
+.loading__wrapper {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
 @keyframes spinner {
    from {
     transform: rotate(90deg);

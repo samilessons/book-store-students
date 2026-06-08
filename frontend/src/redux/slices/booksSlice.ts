@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import CreateBook from "../../utils/createBook";
 import { type NewBook } from "../../interfaces/NewBookInterface";
+import { setError } from "./errorSlice";
 
 const initialState: NewBook[] = [
   // {
@@ -78,9 +79,14 @@ const initialState: NewBook[] = [
 
 export const fetchBook = createAsyncThunk(
   "books/fetchBook",
-  async () => {
-    const res = await axios.get("http://localhost:5555/random-book");
-    return res.data;
+  async (url: string, thunkAPI) => {
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error) {
+      thunkAPI.dispatch(setError(error.message));
+      throw error;
+    }
   }
 );
 

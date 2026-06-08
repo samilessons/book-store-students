@@ -6,8 +6,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/random-book", (req, res) => {
+app.get("/api-book", (req, res) => {
   res.json(bookData[Math.floor(Math.random() * bookData.length)]);
+});
+
+app.get("/api-book-with-delay", (req, res) => {
+  setTimeout(() => {
+    res.json(bookData[Math.floor(Math.random() * bookData.length)]);
+  }, 2000);
 });
 
 const port = 5555;
